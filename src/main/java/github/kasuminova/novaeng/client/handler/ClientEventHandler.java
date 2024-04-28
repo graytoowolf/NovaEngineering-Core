@@ -3,7 +3,7 @@ package github.kasuminova.novaeng.client.handler;
 import com.llamalad7.betterchat.gui.GuiBetterChat;
 import github.kasuminova.novaeng.NovaEngineeringCore;
 import github.kasuminova.novaeng.client.gui.hudcaching.HUDCaching;
-import github.kasuminova.novaeng.client.util.TitleUtils;
+
 import github.kasuminova.novaeng.common.profiler.CPacketProfiler;
 import github.kasuminova.novaeng.common.profiler.TEUpdatePacketProfiler;
 import net.minecraft.client.Minecraft;
@@ -35,24 +35,11 @@ public class ClientEventHandler {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.START) {
-            return;
-        }
-        clientTick++;
-
-        if (clientTick % 5 == 0) {
-            TitleUtils.checkTitleState();
-            debugMessageUpdateRequired = true;
-        }
-    }
-    
-    @SubscribeEvent
     public void onClientRenderTick(TickEvent.RenderTickEvent event) {
         if (event.phase != TickEvent.Phase.END) {
             return;
         }
-        
+
         if (Loader.isModLoaded("betterchat")) {
             handleBetterChatAnim();
         }
@@ -91,20 +78,11 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onServerConnected(FMLNetworkEvent.ClientConnectedToServerEvent event) {
-        CPacketProfiler.enabled = true;
-        CPacketProfiler.PACKET_TOTAL_SIZE.clear();
-        CPacketProfiler.TOTAL_RECEIVED_DATA_SIZE.set(0);
-        CPacketProfiler.profilerStartTime = System.currentTimeMillis();
-        TEUpdatePacketProfiler.TE_UPDATE_PACKET_TOTAL_SIZE.clear();
 
-        TitleUtils.setRandomTitleSync(String.format("*%s*", event.getManager().getRemoteAddress()));
     }
 
     @SubscribeEvent
     public void onServerDisconnected(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
-        CPacketProfiler.enabled = false;
-        CPacketProfiler.profilerStopTime = System.currentTimeMillis();
 
-        TitleUtils.setRandomTitleSync();
     }
 }

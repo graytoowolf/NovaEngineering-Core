@@ -8,8 +8,7 @@ import github.kasuminova.novaeng.client.gui.hudcaching.HUDCaching;
 import github.kasuminova.novaeng.client.handler.BlockAngelRendererHandler;
 import github.kasuminova.novaeng.client.handler.ClientEventHandler;
 import github.kasuminova.novaeng.client.handler.HyperNetClientEventHandler;
-import github.kasuminova.novaeng.client.hitokoto.HitokotoAPI;
-import github.kasuminova.novaeng.client.util.TitleUtils;
+
 import github.kasuminova.novaeng.common.CommonProxy;
 import github.kasuminova.novaeng.common.command.CommandPacketProfiler;
 import github.kasuminova.novaeng.common.command.ExportResearchDataToJson;
@@ -37,9 +36,6 @@ import java.util.concurrent.CompletableFuture;
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
-    static {
-        CompletableFuture.runAsync(HitokotoAPI::getRandomHitokoto);
-    }
 
     public ClientProxy() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -49,7 +45,7 @@ public class ClientProxy extends CommonProxy {
     public void construction() {
         super.construction();
 
-        TitleUtils.setRandomTitle("*Construction*");
+
     }
 
     @Override
@@ -60,14 +56,14 @@ public class ClientProxy extends CommonProxy {
         MinecraftForge.EVENT_BUS.register(BlockAngelRendererHandler.INSTANCE);
         MinecraftForge.EVENT_BUS.register(HUDCaching.INSTANCE);
 
-        TitleUtils.setRandomTitle("*PreInit*");
+
     }
 
     @Override
     public void init() {
         super.init();
 
-        TitleUtils.setRandomTitle("*Init*");
+
     }
 
     @Override
@@ -77,14 +73,14 @@ public class ClientProxy extends CommonProxy {
         ClientCommandHandler.instance.registerCommand(ExportResearchDataToJson.INSTANCE);
         ClientCommandHandler.instance.registerCommand(CommandPacketProfiler.INSTANCE);
 
-        TitleUtils.setRandomTitle("*PostInit*");
+
     }
 
     @Override
     public void loadComplete() {
         super.loadComplete();
 
-        TitleUtils.setRandomTitle();
+
     }
 
     @SubscribeEvent
